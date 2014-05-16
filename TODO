@@ -1,0 +1,16 @@
+= TODO
+multiple zookeeper nodes in vagrant
+go code running in vagrant
+investigate docker
+failure simulation: kill minoroty of 
+documentation pull requests
+investigate zookeeper acls
+blog post draft
+blog post peer review
+blog post publication
+blog post marketing
+ 
+= DONE
+single zookeeper node in vagrant
+hello world ops from native driver
+set using last node version
