@@ -1,5 +1,5 @@
 = TODO
-client exists
+client children and tree walking
 client ephemeral nodes
 client single watch
 client watch stream
