@@ -1,0 +1,28 @@
+= TODO
+client exists
+client ephemeral nodes
+client single watch
+client watch stream
+client building up local state
+client multi-op
+client server configuration
+client server connections
+
+docker for running zookeeper and go
+containerize multiple zookeeper nodes
+containerize go code
+failure simulation: kill minority of servers
+failure simulation: kill majority of servers
+failure simulation: restore servers from backup
+investigate zookeeper acls
+zk library documentation pull requests
+blog post draft
+blog post peer review
+blog post publication
+blog post marketing
+ 
+= DONE
+single zookeeper node in vagrant
+client basic get and set
+set using last node version
+exhibitor for running zookeeper and go (pass)
