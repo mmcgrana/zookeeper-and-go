@@ -7,7 +7,6 @@ client multi-op
 client server configuration
 client server connections
 
-cli sort children
 cli unix style
 cli rm -f
 cli rm -r -f

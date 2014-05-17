@@ -47,6 +47,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	sort.Strings(children)
 	for _, path := range children {
 		_, stat, err := conn.Get("/namespace/" + path)
 		if err != nil {
@@ -58,6 +59,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	sort.Strings(children)
 	for _, path := range children {
 		fmt.Printf("%+v\n", path)
 	}
