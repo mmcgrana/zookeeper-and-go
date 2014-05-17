@@ -1,5 +1,4 @@
 = TODO
-client ephemeral nodes
 client single watch
 client watch stream
 client building up local state
@@ -14,6 +13,7 @@ cli rm -r -f
 docker for running zookeeper and go
 containerize multiple zookeeper nodes
 containerize go code
+failure simulation: no zookeper running
 failure simulation: kill minority of servers
 failure simulation: kill majority of servers
 failure simulation: restore servers from backup
