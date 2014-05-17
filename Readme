@@ -1,10 +1,5 @@
 = TODO
-cli exists [--wait]
-cli error handling
-cli accept other zookeeper hosts
-cli options handling
-cli help
-cli unix style
+
 
 docker for running zookeeper and go
 containerize multiple zookeeper nodes
