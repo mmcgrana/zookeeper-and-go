@@ -5,6 +5,7 @@ import (
 	"github.com/samuel/go-zookeeper/zk"
 	"io/ioutil"
 	"os"
+	"sort"
 	"strconv"
 	"time"
 )
@@ -83,15 +84,28 @@ func main() {
 			panic(err)
 		}
 	case "get":
-		if !(len(subcommandArgs) == 1) {
-			fmt.Fprintf(os.Stderr, "Usage: zk get <path>")
+		if !(len(subcommandArgs) == 1 || len(subcommandArgs) == 2) {
+			fmt.Fprintf(os.Stderr, "Usage: zk get [--watch] <path>")
 		}
-		path := subcommandArgs[0]
 		conn := connect()
-		data, _, err := conn.Get(path)
-		_, err = os.Stdout.Write(data)
-		if err != nil {
-			panic(err)
+		if len(subcommandArgs) == 1 {
+			path := subcommandArgs[0]
+			data, _, err := conn.Get(path)
+			_, err = os.Stdout.Write(data)
+			if err != nil {
+				panic(err)
+			}
+		} else {
+			path := subcommandArgs[1]
+			data, _, events, err := conn.GetW(path)
+			_, err = os.Stdout.Write(data)
+			if err != nil {
+				panic(err)
+			}
+			evt := <- events
+			if evt.Err != nil {
+				panic(evt)
+			}
 		}
 	case "stat":
 		if !(len(subcommandArgs) == 1) {
@@ -139,17 +153,34 @@ func main() {
 			panic(err)
 		}
 	case "children":
-		if !(len(subcommandArgs) == 1) {
-			fmt.Fprintf(os.Stderr, "Usage: zk children <path>")
+		if !(len(subcommandArgs) == 1 || len(subcommandArgs) == 2) {
+			fmt.Fprintf(os.Stderr, "Usage: zk children [--watch] <path>")
 		}
-		path := subcommandArgs[0]
 		conn := connect()
-		children, _, err := conn.Children(path)
-		if err != nil {
-			panic(err)
-		}
-		for _, child := range children {
-			fmt.Fprintln(os.Stdout, child)
+		if len(subcommandArgs) == 1 {
+			path := subcommandArgs[0]
+			children, _, err := conn.Children(path)
+			if err != nil {
+				panic(err)
+			}
+			sort.Strings(children)
+			for _, child := range children {
+				fmt.Fprintln(os.Stdout, child)
+			}
+		} else {
+			path := subcommandArgs[1]
+			children, _, events, err := conn.ChildrenW(path)
+			if err != nil {
+				panic(err)
+			}
+			sort.Strings(children)
+			for _, child := range children {
+				fmt.Fprintln(os.Stdout, child)
+			}
+			evt := <- events
+			if evt.Err != nil {
+				panic(evt.Err)
+			}
 		}
 	default:
 		fmt.Fprintf(os.Stderr, "Unrecognized subcommand '%s'\n", subcommand)

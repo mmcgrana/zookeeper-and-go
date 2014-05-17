@@ -1,9 +1,6 @@
 = TODO
-client adding commands
-client building up local one-level tree
-
-cli exists
-cli watch?
+cli exists [--wait]
+cli error handling
 cli accept other zookeeper hosts
 cli options handling
 cli help
