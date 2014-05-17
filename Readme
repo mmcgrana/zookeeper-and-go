@@ -1,5 +1,4 @@
 = TODO
-client children and tree walking
 client ephemeral nodes
 client single watch
 client watch stream
@@ -7,6 +6,11 @@ client building up local state
 client multi-op
 client server configuration
 client server connections
+
+cli sort children
+cli unix style
+cli rm -f
+cli rm -r -f
 
 docker for running zookeeper and go
 containerize multiple zookeeper nodes

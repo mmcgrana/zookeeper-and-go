@@ -14,17 +14,17 @@ func main() {
 
 	flags := int32(0)
 	acl := zk.WorldACL(zk.PermAll)
-	_, err = conn.Create("/namespace", []byte("_"), flags, acl)
+	_, err = conn.Create("/namespace", []byte(""), flags, acl)
 	if err != nil {
 		panic(err)
 	}
-	_, err = conn.Create("/namespace/nested", []byte("_"), flags, acl)
+	_, err = conn.Create("/namespace/nested", []byte(""), flags, acl)
 	if err != nil {
 		panic(err)
 	}
 	for i := 1; i <= 5; i++ {
-		key := "/namespace/key" + string(i)
-		data := []byte("data" + string(i))
+		key := fmt.Sprintf("/namespace/key%d", i)
+		data := []byte(fmt.Sprintf("data%d", i))
 		path, err := conn.Create(key, data, flags, acl)
 		if err != nil {
 			panic(err)
@@ -32,8 +32,8 @@ func main() {
 		fmt.Printf("%+v\n", path)
 	}
 	for i := 1; i <= 5; i++ {
-		key := "/namespace/nested/key" + string(i)
-		data := []byte("nesteddata" + string(i))
+		key := fmt.Sprintf("/namespace/nested/key%d", i)
+		data := []byte(fmt.Sprintf("nesteddata%d", i))
 		path, err := conn.Create(key, data, flags, acl)
 		if err != nil {
 			panic(err)
@@ -47,14 +47,18 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	for child := range children {
-		fmt.Printf("%+v\n", child)
+	for _, path := range children {
+		_, stat, err := conn.Get("/namespace/" + path)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v %d\n", path, stat.NumChildren)
 	}
 	children, _, err = conn.Children("/namespace/nested")
 	if err != nil {
 		panic(err)
 	}
-	for child := range children {
-		fmt.Printf("%+v\n", child)
+	for _, path := range children {
+		fmt.Printf("%+v\n", path)
 	}
 }
