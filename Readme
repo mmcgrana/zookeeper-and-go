@@ -1,14 +1,20 @@
 = TODO
-client single watch
-client watch stream
-client building up local state
+client building up local one-level tree
 client multi-op
 client server configuration
 client server connections
+client server stats
+client other server commands
+client / server acls
 
+cli stat
+cli exists
+cli watch?
+cli ruok
+cli server stats
+cli options handling
+cli help
 cli unix style
-cli rm -f
-cli rm -r -f
 
 docker for running zookeeper and go
 containerize multiple zookeeper nodes
@@ -23,9 +29,3 @@ blog post draft
 blog post peer review
 blog post publication
 blog post marketing
- 
-= DONE
-single zookeeper node in vagrant
-client basic get and set
-set using last node version
-exhibitor for running zookeeper and go (pass)

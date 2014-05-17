@@ -10,7 +10,8 @@ import (
 )
 
 func usage() {
-	fmt.Fprintf(os.Stderr, "Usage: zk <create|set|get|exists|children> [args]\n")
+	fmt.Fprintf(os.Stderr, "Usage: zk <create|set|get|delete|children> [args]\n")
+	// fmt.Fprintf(os.Stderr, "Usage: zk <create|set|get|exists|children> [args]\n")
 	os.Exit(1)
 }
 
