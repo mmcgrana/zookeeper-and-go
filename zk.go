@@ -10,8 +10,7 @@ import (
 )
 
 func usage() {
-	fmt.Fprintf(os.Stderr, "Usage: zk <create|set|get|delete|children> [args]\n")
-	// fmt.Fprintf(os.Stderr, "Usage: zk <create|set|get|exists|children> [args]\n")
+	fmt.Fprintf(os.Stderr, "Usage: zk <create|set|get|stat|delete|children> [args]\n")
 	os.Exit(1)
 }
 
@@ -29,6 +28,11 @@ func input() []byte {
 		panic(err)
 	}
 	return data
+}
+
+func formatTime(millis int64) string {
+	t := time.Unix(0, millis * 1000000)
+	return t.Format(time.RFC3339)
 }
 
 func main() {
@@ -89,6 +93,26 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+	case "stat":
+		if !(len(subcommandArgs) == 1) {
+			fmt.Fprintf(os.Stderr, "Usage: zk stat <path>")
+		}
+		path := subcommandArgs[0]
+		conn := connect()
+		_, stat, err := conn.Get(path)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Fprintf(os.Stdout, "Czxid:          %d\n", stat.Czxid)
+		fmt.Fprintf(os.Stdout, "Mzxid:          %d\n", stat.Mzxid)
+		fmt.Fprintf(os.Stdout, "Ctime:          %s\n", formatTime(stat.Ctime))
+		fmt.Fprintf(os.Stdout, "Mtime:          %s\n", formatTime(stat.Mtime))
+		fmt.Fprintf(os.Stdout, "Version:        %d\n", stat.Version)
+		fmt.Fprintf(os.Stdout, "Cversion:       %d\n", stat.Cversion)
+		fmt.Fprintf(os.Stdout, "Aversion:       %d\n", stat.Aversion)
+		fmt.Fprintf(os.Stdout, "EphemeralOwner: %d\n", stat.EphemeralOwner)
+		fmt.Fprintf(os.Stdout, "DataLength:     %d\n", stat.DataLength)
+		fmt.Fprintf(os.Stdout, "Pzxid:          %d\n", stat.Pzxid)
 	case "delete":
 		if !(len(subcommandArgs) == 1 || len(subcommandArgs) == 2)  {
 			fmt.Fprintf(os.Stderr, "Usage: zk delete <path> [version]\n")

@@ -1,17 +1,10 @@
 = TODO
+client adding commands
 client building up local one-level tree
-client multi-op
-client server configuration
-client server connections
-client server stats
-client other server commands
-client / server acls
 
-cli stat
 cli exists
 cli watch?
-cli ruok
-cli server stats
+cli accept other zookeeper hosts
 cli options handling
 cli help
 cli unix style
