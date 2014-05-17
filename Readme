@@ -1,6 +1,4 @@
 = TODO
-
-
 docker for running zookeeper and go
 containerize multiple zookeeper nodes
 containerize go code
