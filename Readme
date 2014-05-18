@@ -1,11 +1,11 @@
 = TODO
-faster container starts (https://vagrantcloud.com/boxer/ubuntu-14.04-jvm)
 containerize go code, share code
 failure simulation: no zookeper running
 failure simulation: kill minority of servers
 failure simulation: kill majority of servers
 failure simulation: restore servers from backup
-investigate zookeeper acls
+zookeeper acls?
+jespen?
 zk library documentation pull requests
 blog post draft
 blog post peer review
