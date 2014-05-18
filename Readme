@@ -1,7 +1,6 @@
 = TODO
-docker for running zookeeper and go
-containerize multiple zookeeper nodes
-containerize go code
+faster container starts (https://vagrantcloud.com/boxer/ubuntu-14.04-jvm)
+containerize go code, share code
 failure simulation: no zookeper running
 failure simulation: kill minority of servers
 failure simulation: kill majority of servers
