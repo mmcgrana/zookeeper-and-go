@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	conn, _, err := zk.Connect([]string{"127.0.0.1:2181"}, time.Second)
+	conn, _, err := zk.Connect([]string{"192.168.12.10:2181"}, time.Second)
 	if err != nil {
 		panic(err)
 	}
