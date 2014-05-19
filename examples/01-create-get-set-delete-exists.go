@@ -15,8 +15,9 @@ func must(err error) {
 }
 
 func connect() *zk.Conn {
-	servers := strings.Split(os.Getenv("ZOOKEEPER_SERVERS"), ",")
-	conn, _, err := zk.Connect(servers, time.Second)
+	zksStr := os.Getenv("ZOOKEEPER_SERVERS")
+	zks := strings.Split(zksStr, ",")
+	conn, _, err := zk.Connect(zks, time.Second)
 	must(err)
 	return conn
 }
@@ -26,23 +27,23 @@ func main() {
 	flags := int32(0)
 	acl := zk.WorldACL(zk.PermAll)
 
-	path, err := conn.Create("/testkey", []byte("testdata"), flags, acl)
+	path, err := conn.Create("/01", []byte("data"), flags, acl)
 	must(err)
 	fmt.Printf("create: %+v\n", path)
 
-	data, stat, err := conn.Get("/testkey")
+	data, stat, err := conn.Get("/01")
 	must(err)
 	fmt.Printf("get:    %+v %+v\n", string(data), stat)
 
-	stat, err = conn.Set("/testkey", []byte("newtestdata"), stat.Version)
+	stat, err = conn.Set("/01", []byte("newdata"), stat.Version)
 	must(err)
 	fmt.Printf("set:    %+v\n", stat)
 
-	err = conn.Delete("/testkey", stat.Version)
+	err = conn.Delete("/01", stat.Version)
 	must(err)
 	fmt.Printf("delete: ok\n")
 
-	exists, stat, err := conn.Exists("/testkey")
+	exists, stat, err := conn.Exists("/01")
 	must(err)
 	fmt.Printf("exists: %+v %+v\n", exists, stat)
 }
