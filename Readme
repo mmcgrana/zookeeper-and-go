@@ -1,5 +1,5 @@
 = TODO
-containerize go code, share code
+share go code
 failure simulation: no zookeper running
 failure simulation: kill minority of servers
 failure simulation: kill majority of servers
