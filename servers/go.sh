@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-apt-get install python-software-properties
-add-apt-repository ppa:duh/golang
+apt-get install -y python-software-properties
+add-apt-repository -y ppa:duh/golang
 apt-get update
 apt-get install -y golang git-core
 
