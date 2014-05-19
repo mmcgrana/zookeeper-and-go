@@ -1,4 +1,13 @@
-= TODO
+## Zookeeper with Go
+
+Go source code and Vagrant configurations for trying out Zookeeper
+with Go.
+
+Please see the [Exploring Zookeeper with Go](https://mmcgrana.github.io/.../exploring-zookeeper-with-go.html)
+for details on this code and using Zookeeper with Go.
+
+### Todo
+
 share go code
 failure simulation: no zookeper running
 failure simulation: kill minority of servers
