@@ -2,8 +2,9 @@
 
 apt-get update
 apt-get install -y openjdk-7-jdk
-wget -q -O /opt/zookeeper-3.4.6.tar.gz http://apache.mirrors.pair.com/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz
-tar -xzf /opt/zookeeper-3.4.6.tar.gz -C /opt
+cd /opt
+wget -q http://apache.mirrors.pair.com/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz
+tar -xzf zookeeper-3.4.6.tar.gz
 
 MYID=$1
 mkdir -p /var/zookeeper/{data,conf}
@@ -18,5 +19,10 @@ server.1=192.168.12.11:2888:3888
 server.2=192.168.12.12:2888:3888
 server.3=192.168.12.13:2888:3888
 EOF
+
+cat > /home/vagrant/.profile <<EOF
+export PS1='(zk$MYID) \\w \$ '
+EOF
+chown vagrant:vagrant /home/vagrant/.profile
 
 /opt/zookeeper-3.4.6/bin/zkServer.sh start /var/zookeeper/conf/zoo.cfg 

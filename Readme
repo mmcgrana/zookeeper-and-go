@@ -1,14 +1,22 @@
-## Zookeeper with Go
+## Zookeeper and Go
 
-Go source code and Vagrant configurations for trying out Zookeeper
-with Go.
+Source code and Vagrant configurations for getting started with
+Zookeeper and Go.
 
-Please see the [Exploring Zookeeper with Go](https://mmcgrana.github.io/.../exploring-zookeeper-with-go.html)
-for details on this code and using Zookeeper with Go.
+Please see the [Getting Started with Zookeeper and Go](https://mmcgrana.github.io/.../getting-started-with-zookeeper-and-go.html)
+blog post for details on this code and using Zookeeper with Go.
+
+The basic flow is to install a recent version of Vagrant with
+Virtualbox and then:
+
+```console
+$ vagrant up
+$ vagrant ssh go
+(go) ~ $ go run /vagrant/examples/01-create-get-set-delete-exists.go
+```
 
 ### Todo
 
-share go code
 failure simulation: no zookeper running
 failure simulation: kill minority of servers
 failure simulation: kill majority of servers
