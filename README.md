@@ -14,7 +14,7 @@ $ vagrant up
 $ vagrant ssh go
 (go) ~ $ go get github.com/samuel/go-zookeeper/zk
 (go) ~ $ go get github.com/mmcgrana/zk
-(go) ~ $ go run /vagrant/examples/01-create-get-set-delete-exists.go
+(go) ~ $ go run /vagrant/0-ping.go
 ```
 
 ### Todo
