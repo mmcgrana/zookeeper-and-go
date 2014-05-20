@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sort"
 	"time"
 	"github.com/samuel/go-zookeeper/zk"
 )
@@ -17,7 +16,6 @@ func mirror(conn *zk.Conn, path string) (chan []string, chan error) {
 				errors <- err
 				return
 			}
-			sort.Strings(snapshot)
 			snapshots <- snapshot
 			evt := <-events
 			if evt.Err != nil {

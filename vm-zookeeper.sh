@@ -20,11 +20,6 @@ server.2=192.168.12.12:2888:3888
 server.3=192.168.12.13:2888:3888
 EOF
 
-cat > /home/vagrant/.profile <<EOF
-export PS1='(zk$MYID) \\w \$ '
-EOF
-chown vagrant:vagrant /home/vagrant/.profile
-
 cat > /etc/init/zookeeper.conf <<EOF
 exec /opt/zookeeper-3.4.6/bin/zkServer.sh start-foreground /var/zookeeper/conf/zoo.cfg
 EOF
