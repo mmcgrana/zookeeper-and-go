@@ -25,5 +25,6 @@ func connect() *zk.Conn {
 func main() {
 	conn := connect()
 	_, _, err := conn.Exists("/ping")
+	fmt.Println("ok")
 	must(err)
 }
