@@ -25,4 +25,7 @@ export PS1='(zk$MYID) \\w \$ '
 EOF
 chown vagrant:vagrant /home/vagrant/.profile
 
-/opt/zookeeper-3.4.6/bin/zkServer.sh start /var/zookeeper/conf/zoo.cfg 
+cat > /etc/init/zookeeper.conf <<EOF
+exec /opt/zookeeper-3.4.6/bin/zkServer.sh start-foreground /var/zookeeper/conf/zoo.cfg
+EOF
+start zookeeper
