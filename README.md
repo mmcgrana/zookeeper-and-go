@@ -14,7 +14,7 @@ $ vagrant up
 $ vagrant ssh go
 (go) ~ $ go get github.com/samuel/go-zookeeper/zk
 (go) ~ $ go get github.com/mmcgrana/zk
-(go) ~ $ go run /vagrant/0-ping.go
+(go) ~ $ go run /vagrant/ex-ping.go
 ```
 
 ### Todo
@@ -26,7 +26,8 @@ failure simulation: restore servers from backup
 zookeeper acls?
 jespen?
 zk library documentation pull requests
-blog post draft
-blog post peer review
-blog post publication
-blog post marketing
+blog draft
+blog peer review
+blog figure out go highlighting
+blog publication
+blog marketing
