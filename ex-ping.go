@@ -24,6 +24,7 @@ func connect() *zk.Conn {
 
 func main() {
 	conn := connect()
+	defer conn.Close()
 	_, _, err := conn.Exists("/ping")
 	fmt.Println("ok")
 	must(err)

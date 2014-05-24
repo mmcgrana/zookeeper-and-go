@@ -2,9 +2,25 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strings"
 	"time"
 	"github.com/samuel/go-zookeeper/zk"
 )
+
+func must(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
+func connect() *zk.Conn {
+	zksStr := os.Getenv("ZOOKEEPER_SERVERS")
+	zks := strings.Split(zksStr, ",")
+	conn, _, err := zk.Connect(zks, time.Second)
+	must(err)
+	return conn
+}
 
 func mirror(conn *zk.Conn, path string) (chan []string, chan error) {
 	snapshots := make(chan []string)
@@ -28,16 +44,12 @@ func mirror(conn *zk.Conn, path string) (chan []string, chan error) {
 }
 
 func main() {
-	conn1, _, err := zk.Connect([]string{"127.0.0.1:2181"}, time.Second)
-	if err != nil {
-		panic(err)
-	}
+	conn1 := connect()
+	defer conn1.Close()
 
 	acl := zk.WorldACL(zk.PermAll)
 	_, err = conn1.Create("/mirror", []byte("here"), 0, acl)
-	if err != nil {
-		panic(err)
-	}
+	must(err)
 
 	snapshots, errors := mirror(conn1, "/mirror")
 	go func() {
@@ -51,34 +63,22 @@ func main() {
 		}
 	}()
 
-	conn2, _, err := zk.Connect([]string{"127.0.0.1:2181"}, time.Second)
-	if err != nil {
-		panic(err)
-	}
+	conn2 := connect()
+	defer conn2.Close()
 
 	_, err = conn2.Create("/mirror/one", []byte("one"), zk.FlagEphemeral, acl)
-	if err != nil {
-		panic(err)
-	}
+	must(err)
 	time.Sleep(time.Second)
 	_, err = conn2.Create("/mirror/two", []byte("two"), zk.FlagEphemeral, acl)
-	if err != nil {
-		panic(err)
-	}
+	must(err)
 	time.Sleep(time.Second)
 	_, err = conn2.Set("/mirror/one", []byte("one new"), 0)
-	if err != nil {
-		panic(err)
-	}
+	must(err)
 	time.Sleep(time.Second)
 	err = conn2.Delete("/mirror/two", 0)
-	if err != nil {
-		panic(err)
-	}
+	must(err)
 	time.Sleep(time.Second)
 	_, err = conn2.Create("/mirror/three", []byte("three"), zk.FlagEphemeral, acl)
-	if err != nil {
-		panic(err)
-	}
+	must(err)
 	time.Sleep(time.Second)
 }
