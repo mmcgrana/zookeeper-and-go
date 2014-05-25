@@ -24,7 +24,6 @@ using the Zookeeper/Go environment described here; see files
 
 ### Todo
 
-return value of Connect
 failure simulation: kill minority of servers
   -> everything works, some weird logging?
 failure simulation: kill majority of servers
