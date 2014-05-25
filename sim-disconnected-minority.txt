@@ -1,0 +1,9 @@
+# Start a looping client operation to observe disconnection effects:
+$ vagrant ssh go
+$ go run /vagrant/ex-loop.go
+
+# Simulate disconnecting a minority of zookeepers by partitioning
+# `zk1`:
+$ vagrant ssh zk1 -- sudo ifconfig eth0 down
+
+# The client should continue to loop fine.

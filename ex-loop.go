@@ -35,10 +35,10 @@ func main() {
 
 	i := 0
 	for {
-		fmt.Println("get")
+		fmt.Printf("get: %d\n", i)
 		_, stat, err := conn.Get("/loop")
 		must(err)
-		fmt.Println("set")
+		fmt.Printf("set: %d\n", i)
 		_, err = conn.Set("/loop", []byte("here"), stat.Version)
 		must(err)
 		time.Sleep(time.Second)
