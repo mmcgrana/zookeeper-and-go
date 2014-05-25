@@ -7,7 +7,7 @@ Please see the [Getting Started with Zookeeper and Go](https://mmcgrana.github.i
 blog post for details on this code and using Zookeeper with Go.
 
 The basic flow is to install a recent version of Vagrant with
-Virtualbox and then:
+VirtualBox and then:
 
 ```console
 $ vagrant up
@@ -24,6 +24,7 @@ using the Zookeeper/Go environment described here; see files
 
 ### Todo
 
+return value of Connect
 failure simulation: no zookeper running
   -> error on connect
 failure simulation: kill minority of servers
