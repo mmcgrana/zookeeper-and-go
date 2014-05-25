@@ -35,7 +35,7 @@ failure simulation: restart cluster
 failure simulation: network hang
   -> ???
 zk library documentation pull requests
-blog draft
+review zk book
 blog peer review
 blog publication
 blog marketing
