@@ -73,10 +73,6 @@ func main() {
 	must(err)
 	time.Sleep(time.Second)
 
-	_, err = conn2.Set("/mirror/one", []byte("one new"), 0)
-	must(err)
-	time.Sleep(time.Second)
-
 	err = conn2.Delete("/mirror/two", 0)
 	must(err)
 	time.Sleep(time.Second)
