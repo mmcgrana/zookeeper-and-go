@@ -24,10 +24,11 @@ func connect() *zk.Conn {
 
 func main() {
 	conn1 := connect()
-	defer conn1.Close()
 
+	flags := int32(zk.FlagEphemeral)
 	acl := zk.WorldACL(zk.PermAll)
-	_, err = conn1.Create("/ephemeral", []byte("here"), zk.FlagEphemeral, acl)
+
+	_, err := conn1.Create("/ephemeral", []byte("here"), flags, acl)
 	must(err)
 
 	conn2 := connect()

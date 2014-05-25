@@ -26,41 +26,28 @@ func main() {
 	conn1 := connect()
 	defer conn1.Close()
 
-	found, stat, ech, err := conn1.ExistsW("/check")
+	flags := int32(zk.FlagEphemeral)
+	acl := zk.WorldACL(zk.PermAll)
+
+	found, _, ech, err := conn1.ExistsW("/watch")
 	must(err)
-	fmt.Printf("%+v\n%+v\n%+v\n", found, stat, ech)
+	fmt.Printf("found: %t\n", found)
 
 	conn2 := connect()
 	must(err)
 
 	go func() {
 		time.Sleep(time.Second * 3)
-		flags := int32(0)
-		acl := zk.WorldACL(zk.PermAll)
-		_, err = conn2.Create("/check", []byte("here"), flags, acl)
+		fmt.Println("creating node")
+		_, err = conn2.Create("/watch", []byte("here"), flags, acl)
 		must(err)
 	}()
 
 	evt := <- ech
-	fmt.Printf("%+v\n", evt)
+	must(evt.Err)
+	fmt.Println("watch fired")
 
-	flags := int32(0)
-	acl := zk.WorldACL(zk.PermAll)
-	_, err = conn1.Create("/check/childa", []byte("here"), flags, acl)
+	found, _, ech, err = conn1.ExistsW("/watch")
 	must(err)
-
-	children, stat, ech, err := conn1.ChildrenW("/check")
-	must(err)
-	fmt.Printf("%+v\n%+v\n%+v\n", children, stat, ech)
-
-	go func() {
-		time.Sleep(time.Second * 3)
-		flags := int32(0)
-		acl := zk.WorldACL(zk.PermAll)
-		_, err = conn2.Create("/check/childb", []byte("here"), flags, acl)
-		must(err)
-	}()
-
-	evt = <- ech
-	fmt.Printf("%+v\n", evt)
+	fmt.Printf("found: %t\n", found)
 }

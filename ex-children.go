@@ -28,40 +28,30 @@ func main() {
 
 	flags := int32(0)
 	acl := zk.WorldACL(zk.PermAll)
-	_, err = conn.Create("/namespace", []byte(""), flags, acl)
+
+	_, err := conn.Create("/dir", []byte("data-parent"), flags, acl)
 	must(err)
 
-	_, err = conn.Create("/namespace/nested", []byte(""), flags, acl)
-	must(err)
-	for i := 1; i <= 5; i++ {
-		key := fmt.Sprintf("/namespace/key%d", i)
-		data := []byte(fmt.Sprintf("data%d", i))
+	for i := 1; i <= 3; i++ {
+		key := fmt.Sprintf("/dir/key%d", i)
+		data := []byte(fmt.Sprintf("data-child-%d", i))
 		path, err := conn.Create(key, data, flags, acl)
 		must(err)
 		fmt.Printf("%+v\n", path)
 	}
-	for i := 1; i <= 5; i++ {
-		key := fmt.Sprintf("/namespace/nested/key%d", i)
-		data := []byte(fmt.Sprintf("nesteddata%d", i))
-		path, err := conn.Create(key, data, flags, acl)
-		must(err)
-		fmt.Printf("%+v\n", path)
-	}
-	fmt.Println()
 
-	fmt.Println("zk.children")
-	children, _, err := conn.Children("/namespace")
+	data, _, err := conn.Get("/dir")
+	fmt.Printf("/dir: %s\n", string(data))
+
+	children, _, err := conn.Children("/dir")
 	must(err)
-	sort.Strings(children)
-	for _, path := range children {
-		_, stat, err := conn.Get("/namespace/" + path)
+	for _, name := range children {
+		data, _, err := conn.Get("/dir/" + name)
 		must(err)
-		fmt.Printf("%+v %d\n", path, stat.NumChildren)
+		fmt.Printf("/dir/%s: %s\n", name, string(data))
+		err = conn.Delete("/dir/" + name, 0)
 	}
-	children, _, err = conn.Children("/namespace/nested")
+
+	err = conn.Delete("/dir", 0)
 	must(err)
-	sort.Strings(children)
-	for _, path := range children {
-		fmt.Printf("%+v\n", path)
-	}
 }

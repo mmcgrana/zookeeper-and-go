@@ -17,6 +17,11 @@ $ vagrant ssh go
 (go) ~ $ go run /vagrant/ex-ping.go
 ```
 
+In addition to the content covered in the above blog post, this
+project also contains notes on basic failure simulations conducted
+using the Zookeeper/Go environment described here; see files
+`sim-*.sh`.
+
 ### Todo
 
 failure simulation: no zookeper running
@@ -27,10 +32,10 @@ failure simulation: kill majority of servers
   -> can read, can't write?
 failure simulation: restart cluster
   -> how does it even work
-zookeeper acls?
+failure simulation: network hang
+  -> ???
 zk library documentation pull requests
 blog draft
 blog peer review
-blog figure out go highlighting
 blog publication
 blog marketing

@@ -47,9 +47,8 @@ func main() {
 	conn1 := connect()
 	defer conn1.Close()
 
+	flags := int32(zk.FlagEphemeral)
 	acl := zk.WorldACL(zk.PermAll)
-	_, err = conn1.Create("/mirror", []byte("here"), 0, acl)
-	must(err)
 
 	snapshots, errors := mirror(conn1, "/mirror")
 	go func() {
@@ -64,21 +63,28 @@ func main() {
 	}()
 
 	conn2 := connect()
-	defer conn2.Close()
+	time.Sleep(time.Second)
 
-	_, err = conn2.Create("/mirror/one", []byte("one"), zk.FlagEphemeral, acl)
+	_, err := conn2.Create("/mirror/one", []byte("one"), flags, acl)
 	must(err)
 	time.Sleep(time.Second)
-	_, err = conn2.Create("/mirror/two", []byte("two"), zk.FlagEphemeral, acl)
+
+	_, err = conn2.Create("/mirror/two", []byte("two"), flags, acl)
 	must(err)
 	time.Sleep(time.Second)
+
 	_, err = conn2.Set("/mirror/one", []byte("one new"), 0)
 	must(err)
 	time.Sleep(time.Second)
+
 	err = conn2.Delete("/mirror/two", 0)
 	must(err)
 	time.Sleep(time.Second)
-	_, err = conn2.Create("/mirror/three", []byte("three"), zk.FlagEphemeral, acl)
+
+	_, err = conn2.Create("/mirror/three", []byte("three"), flags, acl)
 	must(err)
+	time.Sleep(time.Second)
+
+	conn2.Close()
 	time.Sleep(time.Second)
 }
