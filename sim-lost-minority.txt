@@ -1,0 +1,15 @@
+# Simulate losing a minority of zookeepers by killing `zk`:
+$ vagrant ssh zk1 -- sudo stop zookeeper
+
+# Try running a basic `zk` operation, it should work fine:
+$ vagrant ssh go
+$ zk children /
+zookeeper
+
+# Try writing and then reading the write, it should work fine:
+$ echo "hello" | zk create /world
+$ zk get /world
+hello
+$ zk delete /world
+$ zk exists /world
+n
