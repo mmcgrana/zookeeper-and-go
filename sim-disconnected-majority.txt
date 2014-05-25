@@ -4,5 +4,7 @@ $ go run /vagrant/ex-loop.go
 
 # Simulate disconnecting a minority of zookeepers by partitioning
 # `zk{1,2}`:
-$ vagrant ssh zk1 -- sudo ifconfig eth0 down
-$ vagrant ssh zk2 -- sudo ifconfig eth0 down
+$ vagrant ssh zk1 -- sudo ifconfig eth1 down
+$ vagrant ssh zk2 -- sudo ifconfig eth1 down
+
+# The client will quickly panic.
