@@ -44,10 +44,10 @@ func main() {
 	}()
 
 	evt := <- ech
-	must(evt.Err)
 	fmt.Println("watch fired")
+	must(evt.Err)
 
-	found, _, ech, err = conn1.ExistsW("/watch")
+	found, _, err = conn1.Exists("/watch")
 	must(err)
 	fmt.Printf("found: %t\n", found)
 }

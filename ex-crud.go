@@ -24,6 +24,8 @@ func connect() *zk.Conn {
 
 func main() {
 	conn := connect()
+	defer conn.Close()
+
 	flags := int32(0)
 	acl := zk.WorldACL(zk.PermAll)
 
