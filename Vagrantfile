@@ -1,6 +1,6 @@
 VAGRANTFILE_API_VERSION = "2"
 
-Vagrant.configure("2") do |config|
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   ["1", "2", "3"].each do |n|
     config.vm.define "zk#{n}" do |zk1_config|
       zk1_config.vm.box = "hashicorp/precise64"
