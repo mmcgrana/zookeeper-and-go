@@ -24,8 +24,6 @@ using the Zookeeper/Go environment described here; see files
 
 ### Todo
 
-failure simulation: restart cluster
-  -> how does it even work
 failure simulation: network hang
   -> ???
 zk library documentation pull requests
