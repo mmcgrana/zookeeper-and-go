@@ -24,8 +24,6 @@ using the Zookeeper/Go environment described here; see files
 
 ### Todo
 
-failure simulation: kill majority of servers
-  -> can read, can't write?
 failure simulation: restart cluster
   -> how does it even work
 failure simulation: network hang

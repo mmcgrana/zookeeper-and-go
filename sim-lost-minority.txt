@@ -1,4 +1,4 @@
-# Simulate losing a minority of zookeepers by killing `zk`:
+# Simulate losing a minority of zookeepers by killing `zk1`:
 $ vagrant ssh zk1 -- sudo stop zookeeper
 
 # Try running a basic `zk` operation, it should work fine:
@@ -7,9 +7,9 @@ $ zk children /
 zookeeper
 
 # Try writing and then reading the write, it should work fine:
-$ echo "hello" | zk create /world
-$ zk get /world
+$ echo "hello" | zk create /sim-lost-minority
+$ zk get /sim-lost-minority
 hello
-$ zk delete /world
-$ zk exists /world
+$ zk delete /sim-lost-minority
+$ zk exists /sim-lost-minority
 n
