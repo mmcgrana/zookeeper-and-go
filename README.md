@@ -20,11 +20,14 @@ $ vagrant ssh go
 ### Todo
 
 failure simulation: no zookeper running
+  -> error on connect
 failure simulation: kill minority of servers
+  -> everything works, some weird logging?
 failure simulation: kill majority of servers
-failure simulation: restore servers from backup
+  -> can read, can't write?
+failure simulation: restart cluster
+  -> how does it even work
 zookeeper acls?
-jespen?
 zk library documentation pull requests
 blog draft
 blog peer review
