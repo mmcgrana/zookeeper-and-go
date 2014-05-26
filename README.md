@@ -17,7 +17,10 @@ $ vagrant ssh go
 (go) ~ $ go run /vagrant/ex-ping.go
 ```
 
-In addition to the content covered in the above blog post, this
-project also contains notes on basic failure simulations conducted
-using the Zookeeper/Go environment described here; see files
-`sim-*.txt`.
+`ex-*.go` files are example programs running with `go run` as above.
+
+`vm-*.sh` are VM configuration files, used in `vagrant up` above.
+
+`sim-*.txt` are failure simulation notes, showing how to run basic
+failure simulations in the environment described above and the
+results they should produce.
