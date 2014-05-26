@@ -38,7 +38,7 @@ func main() {
 
 	go func() {
 		time.Sleep(time.Second * 3)
-		fmt.Println("creating node")
+		fmt.Println("creating znode")
 		_, err = conn2.Create("/watch", []byte("here"), flags, acl)
 		must(err)
 	}()

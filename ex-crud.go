@@ -41,7 +41,7 @@ func main() {
 	must(err)
 	fmt.Printf("set:    %+v\n", stat)
 
-	err = conn.Delete("/01", stat.Version)
+	err = conn.Delete("/01", -1)
 	must(err)
 	fmt.Printf("delete: ok\n")
 
