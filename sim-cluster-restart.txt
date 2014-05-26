@@ -1,0 +1,16 @@
+# First set a persistent value in Zookeeper that we'll check after
+# the restart.
+$ vagrant ssh go
+$ echo "here" | zk create /restart
+
+# Stop all zookeepers.
+$ vagrant ssh zk1 -- sudo stop zookeeper
+$ vagrant ssh zk2 -- sudo stop zookeeper
+$ vagrant ssh zk3 -- sudo stop zookeeper
+
+# Then restart them all.
+
+# Verify that the value is still there.
+$ vagrant ssh go
+$ zk get /restart
+here
