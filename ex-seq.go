@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
+	"github.com/samuel/go-zookeeper/zk"
 	"os"
 	"strings"
 	"time"
-	"github.com/samuel/go-zookeeper/zk"
 )
 
 func must(err error) {
@@ -29,7 +29,7 @@ func main() {
 	flags := int32(zk.FlagSequence | zk.FlagEphemeral)
 	acl := zk.WorldACL(zk.PermAll)
 
-	for i:=0; i<3; i++ {
+	for i := 0; i < 3; i++ {
 		path, err := conn.Create("/seq-", []byte("data"), flags, acl)
 		must(err)
 		fmt.Printf("%d %s\n", i, path)

@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
+	"github.com/samuel/go-zookeeper/zk"
 	"os"
 	"strings"
 	"time"
-	"github.com/samuel/go-zookeeper/zk"
 )
 
 func must(err error) {
@@ -49,7 +49,7 @@ func main() {
 		data, _, err := conn.Get("/dir/" + name)
 		must(err)
 		fmt.Printf("/dir/%s: %s\n", name, string(data))
-		err = conn.Delete("/dir/" + name, 0)
+		err = conn.Delete("/dir/"+name, 0)
 	}
 
 	err = conn.Delete("/dir", 0)

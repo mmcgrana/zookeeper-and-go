@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
+	"github.com/samuel/go-zookeeper/zk"
 	"os"
 	"strings"
 	"time"
-	"github.com/samuel/go-zookeeper/zk"
 )
 
 func must(err error) {
@@ -43,7 +43,7 @@ func main() {
 		must(err)
 	}()
 
-	evt := <- ech
+	evt := <-ech
 	fmt.Println("watch fired")
 	must(evt.Err)
 
