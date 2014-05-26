@@ -9,6 +9,9 @@ $ vagrant ssh zk2 -- sudo stop zookeeper
 $ vagrant ssh zk3 -- sudo stop zookeeper
 
 # Then restart them all.
+$ vagrant ssh zk1 -- sudo start zookeeper
+$ vagrant ssh zk2 -- sudo start zookeeper
+$ vagrant ssh zk3 -- sudo start zookeeper
 
 # Verify that the value is still there.
 $ vagrant ssh go
