@@ -20,4 +20,4 @@ $ vagrant ssh go
 In addition to the content covered in the above blog post, this
 project also contains notes on basic failure simulations conducted
 using the Zookeeper/Go environment described here; see files
-`sim-*.sh`.
+`sim-*.txt`.
