@@ -12,9 +12,7 @@ VirtualBox and then:
 ```console
 $ vagrant up
 $ vagrant ssh go
-(go) ~ $ go get github.com/samuel/go-zookeeper/zk
-(go) ~ $ go get github.com/mmcgrana/zk
-(go) ~ $ go run /vagrant/ex-ping.go
+$ go run /vagrant/ex-ping.go
 ```
 
 `ex-*.go` files are example programs running with `go run` as above.
