@@ -21,11 +21,3 @@ In addition to the content covered in the above blog post, this
 project also contains notes on basic failure simulations conducted
 using the Zookeeper/Go environment described here; see files
 `sim-*.sh`.
-
-### Todo
-
-zk library documentation pull requests
-review zk book
-blog peer review
-blog publication
-blog marketing
