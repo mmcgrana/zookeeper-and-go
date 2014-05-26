@@ -1,6 +1,6 @@
 ## Zookeeper and Go
 
-Source code and Vagrant configurations for getting started with
+Example code and Vagrant configurations for getting started with
 Zookeeper and Go.
 
 Please see the [Getting Started with Zookeeper and Go](https://mmcgrana.github.io/2014/05/getting-started-with-zookeeper-and-go.html)
