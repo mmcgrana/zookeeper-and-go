@@ -1,24 +1,37 @@
 ## Zookeeper and Go
 
-Example code and Vagrant configurations for getting started with
-Zookeeper and Go.
+Example Go code, Vagrant configurations, and Dockerfiles for getting
+started with Zookeeper and Go.
 
-Please see the [Getting Started with Zookeeper and Go](https://mmcgrana.github.io/2014/05/getting-started-with-zookeeper-and-go.html)
-blog post for details on this code and using Zookeeper with Go.
+Based on the post [Getting Started with Zookeeper and Go](https://mmcgrana.github.io/2014/05/getting-started-with-zookeeper-and-go.html),
+but modified to use Docker in addition to Vagrant.
 
-The basic flow is to install a recent version of Vagrant with
-VirtualBox and then:
+### Usage
+
+First, ensure you have a recent version of Vagrant with Virtualbox
+installed. Then run:
 
 ```console
 $ vagrant up
-$ vagrant ssh go
+$ vagrant ssh
+$ sudo docker run -i -t -v /vagrant:/vagrant --env-file /etc/go.env go
 $ go run /vagrant/ex-ping.go
 ```
 
-`ex-*.go` files are example programs running with `go run` as above.
+This should write "ok" if everything is working.
 
-`vm-*.sh` are VM configuration files, used in `vagrant up` above.
+Run other `ex-*.go` example programs with `go run` as above.
 
 `sim-*.txt` are failure simulation notes, showing how to run basic
-failure simulations in the environment described above and the
-results they should produce.
+failure simulations in this environment and the results they should
+produce.
+
+### Vagrant and Docker Configuration
+
+This system uses Vagrant and Docker to build a complete local
+development environment. See the `Vagrantfile` for details.
+
+Vagrant provides a single Ubuntu VM in which we run 3 containers
+with Zookeepers 1 container with a Go environment. All containers
+share the host's network.
+
