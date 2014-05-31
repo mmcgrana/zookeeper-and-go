@@ -1,5 +1,4 @@
 VAGRANTFILE_API_VERSION = "2"
-VM_IP = "192.168.12.10"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "phusion-open-ubuntu-14.04-amd64"
@@ -7,6 +6,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "virtualbox" do |v|
     v.customize ['modifyvm', :id, '--nicpromisc1', 'allow-all']
   end
-  config.vm.network "private_network", :ip => VM_IP
-  config.vm.provision :shell, :path => "vm.sh", :args => VM_IP
+  config.vm.network "private_network", :ip => "192.168.12.10"
+  config.vm.provision :shell, :path => "vm.sh"
 end
