@@ -9,9 +9,7 @@ $ zk children /
 2014/05/25 22:06:31 Failed to connect to 192.168.12.12:2181: dial tcp 192.168.12.12:2181: i/o timeout
 2014/05/25 22:06:32 Failed to connect to 192.168.12.13:2181: dial tcp 192.168.12.13:2181: i/o timeout
 2014/05/25 22:06:33 Failed to connect to 192.168.12.11:2181: dial tcp 192.168.12.11:2181: i/o timeout
-^C$
-
-# See https://github.com/samuel/go-zookeeper/issues/19 on the infinite connect issue.
+error: could not connect to a server
 
 # Try running a basic Go script:
 $ go run /vagrant/ex-ping.go 
