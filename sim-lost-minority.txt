@@ -1,4 +1,4 @@
-# Simulate losing a minority of zookeepers by killing `zk1`:
+# Simulate losing a minority of zookeepers by killing `zookeeper.1`:
 $ docker stop zookeeper.1
 
 # Try running a basic `zk` operation, it should work fine:
@@ -13,7 +13,3 @@ hello
 $ zk delete /sim-lost-minority
 $ zk exists /sim-lost-minority
 n
-
-# To restore, rebuild the VM:
-$ docker ps -a | tail -n +2 | cut -d ' ' -f 1 | xargs -n 1 docker rm -f
-$ /vagrant/vm.sh

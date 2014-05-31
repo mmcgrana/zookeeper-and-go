@@ -1,22 +1,27 @@
 # Create a record that we'll try to read later:
-$ vagrant ssh go
+$ /bin/go-console
 $ echo "test" | zk create /sim-lost-majority
 
-# Simulate losing a minority of zookeepers by killing `zk{1,2}`:
-$ vagrant ssh zk1 -- sudo stop zookeeper
-$ vagrant ssh zk2 -- sudo stop zookeeper
+# Simulate losing a minority of zookeepers by killing
+# `zookeeper.{1,2}`:
+$ docker stop zookeeper.1
+$ docker stop zookeeper.2
 
 # Try running a basic `zk` operation, it should fail:
-$ vagrant ssh go
+$ /bin/go-console
 $ zk children /
-2014/05/25 22:33:35 Failed to connect to 192.168.12.12:2181: dial tcp 192.168.12.12:2181: i/o timeout
-2014/05/25 22:33:36 Failed to connect to 192.168.12.11:2181: dial tcp 192.168.12.11:2181: i/o timeout
-2014/05/25 22:33:37 Failed to connect to 192.168.12.12:2181: dial tcp 192.168.12.12:2181: i/o timeout
-error: could not connect to a server
+2014/05/31 18:15:11 Failed to connect to 192.168.1.2:2181: dial tcp 192.168.1.2:2181: i/o timeout
+2014/05/31 18:15:12 Failed to connect to 192.168.1.1:2181: dial tcp 192.168.1.1:2181: i/o timeout
+2014/05/31 18:15:13 Failed to connect to 192.168.1.2:2181: dial tcp 192.168.1.2:2181: no route to host
+2014/05/31 18:15:14 Failed to connect to 192.168.1.1:2181: dial tcp 192.168.1.1:2181: i/o timeout
+2014/05/31 18:15:15 Failed to connect to 192.168.1.2:2181: dial tcp 192.168.1.2:2181: i/o timeout
 
 # Writes should fail as well:
 $ echo "test2" | zk set /sim-lost-majority
-2014/05/25 22:34:18 Failed to connect to 192.168.12.12:2181: dial tcp 192.168.12.12:2181: i/o timeout
-2014/05/25 22:34:19 Failed to connect to 192.168.12.11:2181: dial tcp 192.168.12.11:2181: i/o timeout
-2014/05/25 22:34:20 Failed to connect to 192.168.12.12:2181: dial tcp 192.168.12.12:2181: i/o timeout
-error: could not connect to a server
+2014/05/31 18:16:12 Failed to connect to 192.168.1.2:2181: dial tcp 192.168.1.2:2181: i/o timeout
+2014/05/31 18:16:13 Failed to connect to 192.168.1.1:2181: dial tcp 192.168.1.1:2181: i/o timeout
+2014/05/31 18:16:14 Failed to connect to 192.168.1.2:2181: dial tcp 192.168.1.2:2181: no route to host
+2014/05/31 18:16:15 Failed to connect to 192.168.1.1:2181: dial tcp 192.168.1.1:2181: no route to host
+2014/05/31 18:16:16 Failed to connect to 192.168.1.2:2181: dial tcp 192.168.1.2:2181: i/o timeout
+
+# (Currently neither of these commands exit though.)

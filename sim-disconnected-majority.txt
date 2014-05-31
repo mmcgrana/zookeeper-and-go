@@ -1,10 +1,15 @@
 # Start a looping client operation to observe disconnection effects:
-$ vagrant ssh go
+$ /bin/go-console
 $ go run /vagrant/ex-loop.go
 
 # Simulate disconnecting a minority of zookeepers by partitioning
-# `zk{1,2}`:
-$ vagrant ssh zk1 -- sudo ifconfig eth1 down
-$ vagrant ssh zk2 -- sudo ifconfig eth1 down
+# `zookeeper.{1,2}`:
+$ ifconfig | grep pl | head -n 2
+$ ifconfig $INTERFACE1 down
+$ ifconfig $INTERFACE2 down
 
 # The client will quickly panic.
+...
+get: 45
+2014/05/31 18:37:52 read tcp 192.168.1.2:2181: i/o timeout
+panic: zk: connection closed
