@@ -4,9 +4,10 @@
 wget -q -O - https://get.docker.io/gpg | apt-key add -
 echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
 apt-get update
-apt-get install -y --force-yes lxc-docker
+apt-get install -y lxc-docker
 
 # Install pipework script.
+apt-get install -y bridge-utils
 wget -q -O /bin/pipework https://raw.githubusercontent.com/jpetazzo/pipework/master/pipework
 chmod +x /bin/pipework
 
@@ -59,5 +60,5 @@ pipework br1 zookeeper.2 "$ZOOKEEPER_2_IP/24"
 docker run -d --name zookeeper.3 --env-file /etc/zookeeper.3.env --volume /var/zookeeper.3:/var/zookeeper zookeeper
 pipework br1 zookeeper.3 "$ZOOKEEPER_3_IP/24"
 
-# docker run -name go -i -t -v /vagrant:/vagrant --env-file /etc/go.env go
-# pipework br1 go "$GO_IP/24"
+# docker run --name go.1 -i -t -v /vagrant:/vagrant --env-file /etc/go.env go
+# pipework br1 go.1 "$GO_IP/24"
