@@ -26,6 +26,6 @@ func main() {
 	conn := connect()
 	defer conn.Close()
 	_, _, err := conn.Exists("/ping")
-	fmt.Println("ok")
 	must(err)
+	fmt.Println("ok")
 }
