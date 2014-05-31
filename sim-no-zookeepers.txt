@@ -1,19 +1,20 @@
 # Simulate no Zookeepers running by shutting all 3 down:
-$ vagrant ssh zk1 -- sudo stop zookeeper
-$ vagrant ssh zk2 -- sudo stop zookeeper
-$ vagrant ssh zk3 -- sudo stop zookeeper
+$ docker stop zookeeper.1
+$ docker stop zookeeper.2
+$ docker stop zookeeper.3
 
 # Try running a basic `zk` operation:
-$ vagrant ssh go
+$ /bin/go-console
 $ zk children /
-2014/05/25 22:06:31 Failed to connect to 192.168.12.12:2181: dial tcp 192.168.12.12:2181: i/o timeout
-2014/05/25 22:06:32 Failed to connect to 192.168.12.13:2181: dial tcp 192.168.12.13:2181: i/o timeout
-2014/05/25 22:06:33 Failed to connect to 192.168.12.11:2181: dial tcp 192.168.12.11:2181: i/o timeout
+2014/05/31 17:49:09 Failed to connect to 192.168.1.2:2181: dial tcp 192.168.1.2:2181: i/o timeout
+2014/05/31 17:49:10 Failed to connect to 192.168.1.3:2181: dial tcp 192.168.1.3:2181: i/o timeout
+2014/05/31 17:49:11 Failed to connect to 192.168.1.1:2181: dial tcp 192.168.1.1:2181: i/o timeout
 error: could not connect to a server
 
 # Try running a basic Go script:
 $ go run /vagrant/ex-ping.go 
-2014/05/25 22:08:56 Failed to connect to 192.168.12.12:2181: dial tcp 192.168.12.12:2181: i/o timeout
-2014/05/25 22:08:57 Failed to connect to 192.168.12.13:2181: dial tcp 192.168.12.13:2181: i/o timeout
-2014/05/25 22:08:58 Failed to connect to 192.168.12.11:2181: dial tcp 192.168.12.11:2181: i/o timeout
+2014/05/31 17:50:17 Failed to connect to 192.168.1.2:2181: dial tcp 192.168.1.2:2181: i/o timeout
+2014/05/31 17:50:18 Failed to connect to 192.168.1.3:2181: dial tcp 192.168.1.3:2181: i/o timeout
+2014/05/31 17:50:19 Failed to connect to 192.168.1.1:2181: dial tcp 192.168.1.1:2181: i/o timeout
 panic: zk: could not connect to a server
+...
