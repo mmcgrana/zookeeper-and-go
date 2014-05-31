@@ -14,19 +14,7 @@ installed. Then run:
 ```console
 $ vagrant up
 $ vagrant ssh
-$ sudo docker run --name go.1 -i -t -v /vagrant:/vagrant --env-file /etc/go.env go
-```
-
-In a separate terminal:
-
-```console
-$ vagrant ssh
-$ sudo pipework br1 go.1 "$GO_IP/24"
-```
-
-Then back in the first:
-
-```console
+$ sudo /bin/go-console
 $ go run /vagrant/ex-ping.go
 ```
 

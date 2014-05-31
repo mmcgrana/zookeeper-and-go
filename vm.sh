@@ -7,7 +7,7 @@ apt-get update
 apt-get install -y lxc-docker
 
 # Install pipework.
-apt-get install -y bridge-utils
+apt-get install -y bridge-utils arping
 wget -q -O /bin/pipework https://raw.githubusercontent.com/jpetazzo/pipework/master/pipework
 chmod +x /bin/pipework
 
@@ -59,3 +59,11 @@ pipework br1 zookeeper.2 "$ZOOKEEPER_2_IP/24"
 
 docker run -d --name zookeeper.3 --env-file /etc/zookeeper.3.env --volume /var/zookeeper.3:/var/zookeeper zookeeper
 pipework br1 zookeeper.3 "$ZOOKEEPER_3_IP/24"
+
+# Write go console script.
+cat > /bin/go-console <<EOF
+CONTAINER_ID=\$(docker run -d -t -i -v /vagrant:/vagrant --env-file /etc/go.env go /bin/bash)
+pipework br1 \$CONTAINER_ID "$GO_IP/24"
+docker attach \$CONTAINER_ID
+EOF
+chmod +x /bin/go-console
