@@ -16,5 +16,4 @@ $ go run /vagrant/ex-ping.go
 2014/05/25 22:08:56 Failed to connect to 192.168.12.12:2181: dial tcp 192.168.12.12:2181: i/o timeout
 2014/05/25 22:08:57 Failed to connect to 192.168.12.13:2181: dial tcp 192.168.12.13:2181: i/o timeout
 2014/05/25 22:08:58 Failed to connect to 192.168.12.11:2181: dial tcp 192.168.12.11:2181: i/o timeout
-^Cexit status 2
-$
+panic: zk: could not connect to a server

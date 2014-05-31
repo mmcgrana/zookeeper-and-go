@@ -12,11 +12,11 @@ $ zk children /
 2014/05/25 22:33:35 Failed to connect to 192.168.12.12:2181: dial tcp 192.168.12.12:2181: i/o timeout
 2014/05/25 22:33:36 Failed to connect to 192.168.12.11:2181: dial tcp 192.168.12.11:2181: i/o timeout
 2014/05/25 22:33:37 Failed to connect to 192.168.12.12:2181: dial tcp 192.168.12.12:2181: i/o timeout
-^C$
+error: could not connect to a server
 
 # Writes should fail as well:
 $ echo "test2" | zk set /sim-lost-majority
 2014/05/25 22:34:18 Failed to connect to 192.168.12.12:2181: dial tcp 192.168.12.12:2181: i/o timeout
 2014/05/25 22:34:19 Failed to connect to 192.168.12.11:2181: dial tcp 192.168.12.11:2181: i/o timeout
 2014/05/25 22:34:20 Failed to connect to 192.168.12.12:2181: dial tcp 192.168.12.12:2181: i/o timeout
-^C$
+error: could not connect to a server
