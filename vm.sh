@@ -59,6 +59,3 @@ pipework br1 zookeeper.2 "$ZOOKEEPER_2_IP/24"
 
 docker run -d --name zookeeper.3 --env-file /etc/zookeeper.3.env --volume /var/zookeeper.3:/var/zookeeper zookeeper
 pipework br1 zookeeper.3 "$ZOOKEEPER_3_IP/24"
-
-# docker run --name go.1 -i -t -v /vagrant:/vagrant --env-file /etc/go.env go
-# pipework br1 go.1 "$GO_IP/24"
