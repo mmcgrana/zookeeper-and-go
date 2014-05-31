@@ -14,7 +14,7 @@ installed. Then run:
 ```console
 $ vagrant up
 $ vagrant ssh
-$ sudo docker run -i -t -v /vagrant:/vagrant --env-file /etc/go.env go
+# todo
 $ go run /vagrant/ex-ping.go
 ```
 
@@ -34,4 +34,3 @@ development environment. See the `Vagrantfile` for details.
 Vagrant provides a single Ubuntu VM in which we run 3 containers
 with Zookeepers 1 container with a Go environment. All containers
 share the host's network.
-

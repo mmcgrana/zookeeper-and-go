@@ -6,40 +6,58 @@ echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docke
 apt-get update
 apt-get install -y --force-yes lxc-docker
 
+# Install pipework script.
+wget -q -O /bin/pipework https://raw.githubusercontent.com/jpetazzo/pipework/master/pipework
+chmod +x /bin/pipework
+
 # Build the Docker images we'll be using.
 docker build -t zookeeper /vagrant/img-zookeeper
 docker build -t go /vagrant/img-go
 
 # Determine how Zookeeper will address itself in the cluster and how
 # clients will address the cluster.
-VM_IP=$1
-ZOOKEEPER_SERVERS_ZK="$VM_IP:12888:13888,$VM_IP:22888:23888,$VM_IP:32888:33888"
-ZOOKEEPER_SERVERS_GO="$VM_IP:12181,$VM_IP:22181,$VM_IP:32181"
+ZOOKEEPER_1_IP="192.168.1.1"
+ZOOKEEPER_2_IP="192.168.1.2"
+ZOOKEEPER_3_IP="192.168.1.3"
+GO_IP="192.168.1.4"
+ZOOKEEPER_SERVERS_ZK="$ZOOKEEPER_1_IP:2888:3888,$ZOOKEEPER_2_IP:2888:3888,$ZOOKEEPER_3_IP:2888:3888"
+ZOOKEEPER_SERVERS_GO="$ZOOKEEPER_1_IP:2181,$ZOOKEEPER_2_IP:2181,$ZOOKEEPER_3_IP:2181"
 
 # Create persistent Zookeeper data directories.
 mkdir -p /var/zookeeper.{1,2,3}
 
-# Configure Upstart scripts for Zookeepers. Run the servers in
-# Docker, give each server the relevant cluster discovery
-# information, and bind them to persistent data directories.
-cat > /etc/init/zookeeper.1.conf <<EOF
-exec docker run --env ZOOKEEPER_ID=1 --env ZOOKEEPER_SERVERS=$ZOOKEEPER_SERVERS_ZK --env ZOOKEEPER_CLIENT_PORT=12181 --net host --volume /var/zookeeper.1:/var/zookeeper zookeeper
+# Write environment data.
+cat > /etc/zookeeper.1.env <<EOF
+ZOOKEEPER_ID=1
+ZOOKEEPER_CLIENT_PORT=2181
+ZOOKEEPER_SERVERS=$ZOOKEEPER_SERVERS_ZK
 EOF
 
-cat > /etc/init/zookeeper.2.conf <<EOF
-exec docker run --env ZOOKEEPER_ID=2 --env ZOOKEEPER_SERVERS=$ZOOKEEPER_SERVERS_ZK --env ZOOKEEPER_CLIENT_PORT=22181 --net host --volume /var/zookeeper.2:/var/zookeeper zookeeper
+cat > /etc/zookeeper.2.env <<EOF
+ZOOKEEPER_ID=2
+ZOOKEEPER_CLIENT_PORT=2181
+ZOOKEEPER_SERVERS=$ZOOKEEPER_SERVERS_ZK
 EOF
 
-cat > /etc/init/zookeeper.3.conf <<EOF
-exec docker run --env ZOOKEEPER_ID=2 --env ZOOKEEPER_SERVERS=$ZOOKEEPER_SERVERS_ZK --env ZOOKEEPER_CLIENT_PORT=32181 --net host --volume /var/zookeeper.2:/var/zookeeper zookeeper
+cat > /etc/zookeeper.3.env <<EOF
+ZOOKEEPER_ID=3
+ZOOKEEPER_CLIENT_PORT=2181
+ZOOKEEPER_SERVERS=$ZOOKEEPER_SERVERS_ZK
 EOF
 
-# Start Zookeepers.
-start zookeeper.1
-start zookeeper.2
-start zookeeper.3
-
-# Write Zookeeper client addresses for use by Go clients.
 cat > /etc/go.env <<EOF
 ZOOKEEPER_SERVERS=$ZOOKEEPER_SERVERS_GO
 EOF
+
+# Start Zookeepers.
+docker run -d --name zookeeper.1 --env-file /etc/zookeeper.1.env --volume /var/zookeeper.1:/var/zookeeper zookeeper
+pipework br1 zookeeper.1 "$ZOOKEEPER_1_IP/24"
+
+docker run -d --name zookeeper.2 --env-file /etc/zookeeper.2.env --volume /var/zookeeper.2:/var/zookeeper zookeeper
+pipework br1 zookeeper.2 "$ZOOKEEPER_2_IP/24"
+
+docker run -d --name zookeeper.3 --env-file /etc/zookeeper.3.env --volume /var/zookeeper.3:/var/zookeeper zookeeper
+pipework br1 zookeeper.3 "$ZOOKEEPER_3_IP/24"
+
+# docker run -name go -i -t -v /vagrant:/vagrant --env-file /etc/go.env go
+# pipework br1 go "$GO_IP/24"
