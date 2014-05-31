@@ -6,7 +6,7 @@ echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docke
 apt-get update
 apt-get install -y lxc-docker
 
-# Install pipework script.
+# Install pipework.
 apt-get install -y bridge-utils
 wget -q -O /bin/pipework https://raw.githubusercontent.com/jpetazzo/pipework/master/pipework
 chmod +x /bin/pipework
