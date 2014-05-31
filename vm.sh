@@ -1,15 +1,21 @@
 #!/bin/bash
 
 # Install Docker in the VM.
-wget -q -O - https://get.docker.io/gpg | apt-key add -
-echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
-apt-get update
-apt-get install -y lxc-docker
+if ! which docker > /dev/null 2>&1
+then
+  wget -q -O - https://get.docker.io/gpg | apt-key add -
+  echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
+  apt-get update
+  apt-get install -y lxc-docker
+fi
 
 # Install pipework.
-apt-get install -y bridge-utils arping
-wget -q -O /bin/pipework https://raw.githubusercontent.com/jpetazzo/pipework/master/pipework
-chmod +x /bin/pipework
+if ! which pipework > /dev/null 2>&1
+then
+  apt-get install -y bridge-utils arping
+  wget -q -O /bin/pipework https://raw.githubusercontent.com/jpetazzo/pipework/master/pipework
+  chmod +x /bin/pipework
+fi
 
 # Build the Docker images we'll be using.
 docker build -t zookeeper /vagrant/img-zookeeper

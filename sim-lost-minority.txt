@@ -1,8 +1,8 @@
 # Simulate losing a minority of zookeepers by killing `zk1`:
-$ vagrant ssh zk1 -- sudo stop zookeeper
+$ docker stop zookeeper.1
 
 # Try running a basic `zk` operation, it should work fine:
-$ vagrant ssh go
+$ /bin/go-console
 $ zk children /
 zookeeper
 
@@ -13,3 +13,7 @@ hello
 $ zk delete /sim-lost-minority
 $ zk exists /sim-lost-minority
 n
+
+# To restore, rebuild the VM:
+$ docker ps -a | tail -n +2 | cut -d ' ' -f 1 | xargs -n 1 docker rm -f
+$ /vagrant/vm.sh
