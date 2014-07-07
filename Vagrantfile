@@ -11,7 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "go" do |go_config|
     go_config.vm.box = "hashicorp/precise64"
-    go_config.vm.network "private_network", :ip => "129.168.12.10"
+    go_config.vm.network "private_network", :ip => "192.168.12.10"
     go_config.vm.provision :shell, :path => "vm-go.sh"
   end
 end
